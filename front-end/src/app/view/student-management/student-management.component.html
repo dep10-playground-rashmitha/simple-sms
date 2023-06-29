@@ -3,18 +3,18 @@
     <div class="mb-2">
       <label class="form-label">Name</label>
       <div class="input-group">
-        <input type="text" class="form-control text-center" aria-describedby="basic-addon3 basic-addon4" placeholder="Enter Name">
+        <input #txtName type="text" class="form-control text-center" aria-describedby="basic-addon3 basic-addon4" placeholder="Enter Name">
       </div>
     </div>
     <div class="mb-2">
       <label class="form-label">Address</label>
       <div class="input-group">
-        <input type="text" class="form-control text-center" aria-describedby="basic-addon3 basic-addon4" placeholder="Enter Address">
+        <input #txtAddress type="text" class="form-control text-center" aria-describedby="basic-addon3 basic-addon4" placeholder="Enter Address">
       </div>
     </div>
     <div class="d-flex gap-2 justify-content-center">
-      <button type="submit" class="btn btn-primary">SAVE</button>
-      <button type="reset" class="btn btn-warning">CLEAR</button>
+      <button (click)="studentAdd(txtName,txtAddress,$event)" type="submit" class="btn btn-primary">SAVE</button>
+      <button (click)="txtName.focus()" type="reset" class="btn btn-warning">CLEAR</button>
     </div>
   </form>
 </div>
