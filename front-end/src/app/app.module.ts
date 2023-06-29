@@ -4,12 +4,25 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule, Routes} from "@angular/router";
+import { StudentManagementComponent } from './view/student-management/student-management.component';
+import { CoursesComponent } from './view/courses/courses.component';
 
-const routers:Routes=[]
+const routers:Routes=[
+  {
+    path:'students',
+    component:StudentManagementComponent
+  },
+  {
+    path:'courses',
+    component:CoursesComponent
+  }
+]
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StudentManagementComponent,
+    CoursesComponent
   ],
   imports: [
     BrowserModule,
