@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Student} from "../../model/student";
 
 @Component({
   selector: 'app-student-management',
@@ -6,6 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./student-management.component.scss']
 })
 export class StudentManagementComponent {
+
+  studentList:Array<Student>=[];
+
+  constructor(private http:HttpClient,private student:Student) {
+
+  }
 
   studentAdd(txtName: HTMLInputElement, txtAddress: HTMLInputElement, $event: MouseEvent) {
     $event.preventDefault();
@@ -23,6 +31,15 @@ export class StudentManagementComponent {
       alert("Please enter maximum 3 characters for the address")
       return
     }
+    const newStudent=new Student(0,name,address);
+    this.http.post('http://localhost:8080/api/v1/student',newStudent).subscribe(result=>{
+      this.studentList.push(newStudent);
+      txtName.value='';
+      txtAddress.value='';
+      txtName.focus();
+    },error => {
+
+    })
 
   }
 }
