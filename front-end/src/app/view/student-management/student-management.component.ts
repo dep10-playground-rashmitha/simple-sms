@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Student} from "../../model/student";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-student-management',
@@ -11,7 +12,9 @@ export class StudentManagementComponent {
 
   studentList:Array<Student>=[];
 
-  constructor(private http:HttpClient,private student:Student) {
+  constructor(private http:HttpClient) {
+    http.get<Array<Student>>(`${environment.API_BASE_URL}/api/v1/student`)
+      .subscribe(student => this.studentList = student);
 
   }
 
@@ -31,15 +34,21 @@ export class StudentManagementComponent {
       alert("Please enter maximum 3 characters for the address")
       return
     }
-    const newStudent=new Student(0,name,address);
-    this.http.post('http://localhost:8080/api/v1/student',newStudent).subscribe(result=>{
+    const newStudent=new Student(null,name,address);
+    this.http.post(`${environment.API_BASE_URL}/api/v1/student`,newStudent).subscribe(result=>{
       this.studentList.push(newStudent);
       txtName.value='';
       txtAddress.value='';
       txtName.focus();
-    },error => {
+    });
 
-    })
+  }
+
+  deleteStudent(id: number) {
+    this.http.delete(`${environment.API_BASE_URL}/api/v1/student/${id}`).subscribe(result=>{
+      const index=this.studentList.findIndex(student=>student.id===id);
+      this.studentList.splice(index,1);
+    });
 
   }
 }
