@@ -16,16 +16,17 @@ router.get('/',async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const course = req.body as Course;
-   // validation
-    if (course.id == null &&  /^[A-Za-z ]+$/.test(course.description) && /^[0-9]+$/.test(course.duration)) {
+    const course: Course = req.body as Course;
+    // validation
+    if (!(/^C[0-9]{3}/.test(course.id)) || !(/^[A-Za-z ]+$/.test(course.description)
+        || !(/^[1-9]+ [A-Za-z ]+$/.test(course.duration)))) {
         res.sendStatus(400);
         return;
     }
     const result = await datasource.query
     ('INSERT INTO course (id, description, duration) VALUES (?,?,?)',
         [course.id, course.description, course.duration]);
-    res.sendStatus(result.affectedRows? 204:404);
+    res.sendStatus(result.affectedRows? 204:500);
 });
 
 router.delete('/:courseId', async (req, res) => {
